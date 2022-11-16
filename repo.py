@@ -142,6 +142,9 @@ class GarageRepo:
         if q >= amount:
             self.add_tr(datetime, driverid, gasid, stationid, amount)
             self.change_gas_amount(gasid=gasid, amount=-amount)
+            return True
+        else:
+            return False
 
     def add_driver(self, username, password, fio, carid):
         if not self.get_user(username):

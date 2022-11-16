@@ -214,8 +214,10 @@ def transportations_add():
         s = request.form.get('stationid')
         a = request.form['amount']
         if dt and d and g and s and a:
-            gr.add_transportation(datetime=dt, driverid=int(d), gasid=int(g), stationid=int(s), amount=int(a))
-            app.logger.warning(f'New transportation was added by {session.get("username")}')
+            if gr.add_transportation(datetime=dt, driverid=int(d), gasid=int(g), stationid=int(s), amount=int(a)):
+                app.logger.warning(f'New transportation was added by {session.get("username")}')
+            else:
+                flash('Недостаточно топлива')
         else:
             flash('Заполните форму')
     return redirect(url_for("transportations"))
