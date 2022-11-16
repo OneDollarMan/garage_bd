@@ -146,7 +146,8 @@ details {
     width: 100%;
 }
 
-.table_div th {
+.table_div td {
+    text-align: center;
 }
 
 .table_div a, th {
