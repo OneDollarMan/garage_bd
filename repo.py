@@ -75,7 +75,7 @@ class GarageRepo:
             self.get_vars = lambda: self.raw_query("SELECT * FROM var")
             self.get_var = lambda id: self.raw_query(f"SELECT text FROM var WHERE idvar='{id}'")
             self.get_cars_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.car")
-            self.get_users_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.user")
+            self.get_users_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.user WHERE role=1")
             self.get_gases_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.gas")
             self.get_stations_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.station")
             self.get_transportations_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.transportation")
