@@ -26,7 +26,7 @@
                     <select name="stationid">
                         <option disabled selected>Выберите станцию</option>
                         {% for station in stations %}
-                        <option name="stationid" value="{{station[0]}}">{{station[1]}}</option>
+                        <option name="stationid" value="{{station[0]}}">{{station[1]}} ({{station[2]}})</option>
                         {% endfor %}
                     </select>
                     <input type="text" name="amount" placeholder="Количество">
