@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Список станций</h1>
+
+<div class="content_flex">
+    <div class="content_func">
+        {% if session.role == 2 %}
+        <details>
+            <summary>Добавить станцию</summary>
+            <div class="form_div">
+                <form method="post" action="stations/add">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input type="text" name="name" placeholder="Название">
+                    <input type="text" name="address" placeholder="Адрес">
+                    <input type="submit" value="Добавить">
+                </form>
+            </div>
+        </details>
+        {% endif %}
+    </div>
+
+    <div class="table_div">
+        <table>
+            <tr>
+                <th>Номер</th>
+                <th>Название</th>
+                <th>Адрес</th>
+                {% if session.role == 2 %}
+                <th>Действия</th>
+                {% endif %}
+            </tr>
+            {% for station in stations %}
+            <tr>
+                <td><a href="/stations/{{station[0]}}">{{station[0]}}</a></td>
+                <td><a href="/stations/{{station[0]}}">{{station[1]}}</a></td>
+                <td><a href="/stations/{{station[0]}}">{{station[2]}}</a></td>
+                {% if session.role == 2 %}
+                <td><a href="/stations/rm/{{station[0]}}">×</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

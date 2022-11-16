@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="navigation_div">
+    <ul>
+        <li><a href="/stations">< Назад</a></li>
+    </ul>
+</div>
+
+<div class="object_info">
+    <table class="info_table">
+        <caption>Информация о станции</caption>
+        <tr><td>Номер</td><td>{{station[0]}}</td></tr>
+        <tr><td>Название</td><td>{{station[1]}}</td></tr>
+        <tr><td>Адрес</td><td>{{station[2]}}</td></tr>
+    </table>
+
+    <table class="info_table">
+        <caption>Список перевозок</caption>
+        {% for transportation in transportations %}
+        <tr><td><a href="/transportations/{{transportation[0]}}">({{transportation[1]}}) - {{transportation[5]}}л</a></td></tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

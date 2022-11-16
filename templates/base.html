@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+    <head>
+        <title>Гараж - {{title}}</title>
+        <link rel="stylesheet" href="../style.css">
+    </head>
+    <body>
+        <header>
+            <ul class="header_menu">
+                <li><a href="/">Главная</a></li>
+                {% if session.loggedin %}
+                <li><a href="/cars">Автомобили</a></li>
+                <li><a href="/drivers">Водители</a></li>
+                <li><a href="/gases">Топливо</a></li>
+                <li><a href="/stations">Станции</a></li>
+                <li><a href="/transportations">Перевозки</a></li>
+                {% endif %}
+            </ul>
+
+            <ul class="header_menu">
+                {% if session.loggedin %}
+                    {% if session.role == 1 %}
+                        <li><a href="/drivers/{{session.id}}">Добро пожаловать, {{ session.username }}</a></li>
+                    {% else %}
+                        <li class="li_text">Добро пожаловать, {{ session.username }}</li>
+                    {% endif %}
+                    <li><a href="/logout">Выйти</a></li>
+                {% else %}
+                    <li><a href="/login">Авторизация</a></li>
+                {% endif %}
+
+            </ul>
+        </header>
+
+        {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul id=flashes>
+                        {% for message in messages %}
+                            <li>
+                                <div class="flash_text">{{ message }}</div>
+                                <div class="flash_button" onclick="flashes.style.display='none'">×</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

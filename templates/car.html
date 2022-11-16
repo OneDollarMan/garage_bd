@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="navigation_div">
+    <ul>
+        <li><a href="/cars">< Назад</a></li>
+    </ul>
+</div>
+
+<div class="object_info">
+    <table class="info_table">
+        <caption>Информация об автомобиле</caption>
+        <tr>
+           <td>Номер</td><td>{{car[0]}}</td>
+        </tr>
+        <tr>
+           <td>Бренд</td><td>{{car[1]}}</td>
+        </tr>
+        <tr>
+           <td>Модель</td><td>{{car[2]}}</td>
+        </tr>
+        <tr>
+            <td>Госномер</td><td>{{car[3]}}</td>
+        </tr>
+        <tr>
+            <td>Год выпуска</td><td>{{car[4]}}</td>
+        </tr>
+    </table>
+    <table class="info_table">
+        <caption>Список водителей</caption>
+        {% for driver in drivers %}
+        <tr><td><a href="/drivers/{{driver[0]}}">{{driver[2]}}</a></td></tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

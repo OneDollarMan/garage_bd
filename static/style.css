@@ -1,0 +1,210 @@
+body {
+    margin: 0;
+    font: 11pt sans-serif;
+    background: lightgrey;
+}
+
+ul {
+    padding: 0;
+}
+
+header {
+    display: flex;
+    border-bottom: 1px solid #f2f2f2;
+    justify-content: space-between;
+    background: white;
+}
+
+a, a:visited {
+    color: black;
+    display: block;
+    text-decoration: none;
+}
+
+details:hover {
+    cursor: pointer;
+}
+
+p {
+    text-indent: 30pt;
+}
+
+.header_menu {
+    background: white;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.header_menu a, .li_text {
+    margin: 10pt;
+    color: #999999;
+}
+
+.li_text {
+    color: black;
+}
+
+.header_menu a:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.header_menu li {
+    list-style-type: none;
+}
+
+#flashes {
+    list-style-type: none;
+    position: absolute;
+    left: 50%;
+    top: 28pt;
+    background: red;
+    width: fit-content;
+    transform: translate(-50%);
+    color: white;
+    font-weight: bold;
+}
+
+#flashes li {
+    padding: 5pt 10pt;
+    display: flex;
+}
+
+.flash_button {
+    padding: 0 2pt;
+    margin-left: 5pt;
+    border-radius: 2pt;
+}
+
+.flash_button:hover {
+    background: darkred;
+    cursor: pointer;
+}
+
+h2 {
+    margin: 0;
+    background: pink;
+    padding: 5pt 10pt;
+    font-size: 11pt;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+}
+
+#content {
+}
+
+h1 {
+    margin: 0;
+    padding: 5pt;
+    border-bottom: 1px solid black;
+    background: white;
+}
+
+.content_flex {
+    display: flex;
+}
+
+.content_func {
+    width: 200pt;
+}
+
+.form_div {
+    margin-top: 8pt;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, select {
+    padding: 5pt;
+    margin: 5pt;
+}
+
+details {
+    padding: 10pt;
+    border: 1px solid black;
+    margin: 5pt;
+    background: white;
+}
+
+.table_div {
+    margin: 5pt auto;
+    padding: 5pt;
+    background: white;
+    border: 1px solid black;
+    height: fit-content;
+}
+
+.table_div table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table_div th {
+}
+
+.table_div a, th {
+    text-align: center;
+    padding: 10pt;
+}
+
+.table_div tr:nth-child(odd) {
+    background: lightgrey;
+}
+
+.table_div tr:hover {
+    background: #999999;
+}
+
+.navigation_div {
+    background: white;
+}
+
+.navigation_div ul {
+    margin: 0;
+}
+
+.navigation_div li {
+    list-style-type: none;
+    display: table;
+    padding: 5pt;
+}
+
+.navigation_div a:hover {
+    color: grey;
+}
+
+.text_div {
+    background: white;
+    padding: 15pt;
+    margin: 5pt;
+    border: 1px solid black;
+}
+
+.object_info {
+    padding: 10pt;
+    display:flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.info_table {
+    border: 1px solid black;
+    background: white;
+}
+
+.info_table td, caption {
+    padding: 5pt 10pt;
+}
+
+.info_table caption {
+    background: white;
+    border: 1px solid black;
+    border-collapse: collapse;
+}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Список топлива</h1>
+
+<div class="content_flex">
+    <div class="content_func">
+        {% if session.role == 2 %}
+        <details>
+            <summary>Добавить топливо</summary>
+            <div class="form_div">
+                <form method="post" action="gases/add">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input type="text" name="brand" placeholder="Производитель">
+                    <input type="number" name="octane" placeholder="Октановое число">
+                    <input type="submit" value="Добавить">
+                </form>
+            </div>
+        </details>
+
+        <details>
+            <summary>Приход</summary>
+            <div class="form_div">
+                <form method="post" action="gases/add_amount">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <select name="gasid">
+                        <option disabled selected>Выберите топливо</option>
+                        {% for gas in gases %}
+                        <option name="gasid" value="{{gas[0]}}">{{gas[1]}} ({{gas[2]}})</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="amount" placeholder="Количество">
+                    <input type="submit" value="Добавить">
+                </form>
+            </div>
+        </details>
+        {% endif %}
+    </div>
+
+
+    <div class="table_div">
+        <table>
+            <tr>
+                <th>Номер</th>
+                <th>Производитель</th>
+                <th>Октановое число</th>
+                <th>Остаток</th>
+                {% if session.role == 2 %}
+                <th>Действия</th>
+                {% endif %}
+            </tr>
+            {% for gas in gases %}
+            <tr>
+                <td>{{gas[0]}}</a></td>
+                <td>{{gas[1]}}</td>
+                <td>{{gas[2]}}</td>
+                <td>{{gas[3]}}л</td>
+                {% if session.role == 2 %}
+                <td><a href="/gases/rm/{{gas[0]}}">×</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+{% endblock %}

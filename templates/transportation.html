@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="navigation_div">
+    <ul>
+        <li><a href="/transportations">< Назад</a></li>
+    </ul>
+</div>
+
+<div class="object_info">
+    <table class="info_table">
+        <caption>Информация о перевозке</caption>
+        <tr><td>Номер</td><td>{{transportation[0]}}</td></tr>
+        <tr><td>Дата</td><td>{{transportation[1]}}</td></tr>
+        <tr><td>Водитель</td><td><a href="/drivers/{{transportation[2]}}">{{transportation[9]}}</a></td></tr>
+        <tr><td>Станция</td><td>{{transportation[18]}}</td></tr>
+        <tr><td>Объем топлива</td><td>{{transportation[5]}}</td></tr>
+        <tr><td>Статус</td><td>
+            {% if session.role < 1 %}
+            {{transportation[21]}}
+            {% else %}
+                <form method="post" action="../transportations/edit">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input type="hidden" name="trid" value="{{transportation[0]}}">
+                    <select name="status">
+                        {% for var in vars %}
+                            {% if transportation[6] == var[0] %}
+                                <option selected value="{{var[0]}}">{{var[1]}}</option>
+                            {% else %}
+                                <option value="{{var[0]}}">{{var[1]}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Изменить">
+                </form>
+            {% endif %}
+        </td></tr>
+    </table>
+
+</div>
+
+{% endblock %}

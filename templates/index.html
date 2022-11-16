@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text_div">
+    Вас приветствует система управления перевозками. В данный момент в системе зарегистрировано: <br>
+    <ul>
+        <li>{{counts[0]}} автомобилей</li>
+        <li>{{counts[1]}} водителей</li>
+        <li>{{counts[2]}} видов топлива</li>
+        <li>{{counts[3]}} станций</li>
+        <li>{{counts[4]}} перевозок</li>
+    </ul>
+</div>
+{% endblock %}

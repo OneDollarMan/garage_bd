@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="navigation_div">
+    <ul>
+        <li><a href="/drivers">< Назад</a></li>
+    </ul>
+</div>
+
+<div class="object_info">
+    <table class="info_table">
+        <caption>Редактировать данные</caption>
+        {% if session.role < 2 %}
+            <tr>
+                <td>Номер</td><td>{{driver[0]}}</td>
+            </tr>
+            <tr>
+                <td>ФИО</td><td>{{driver[2]}}</td>
+            </tr>
+            <tr>
+                <td>Автомобиль</td><td>{{driver[7]}} {{driver[8]}} ({{driver[9]}})</td>
+            </tr>
+        {% else %}
+            <form method="post" action="../drivers/edit">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <tr>
+                <td>Номер</td><td><input type="hidden" name="driverid" value="{{driver[0]}}">{{driver[0]}}</td>
+            </tr>
+            <tr>
+                <td>ФИО</td><td><input type="text" name="name" placeholder="ФИО" value="{{driver[2]}}"></td>
+            </tr>
+            <tr>
+                <td>Автомобиль</td>
+                <td>
+                    <select name="carid">
+                        <option disabled selected>Выберите автомобиль</option>
+                        {% for car in cars %}
+                            {% if car[0] == driver[5] %}
+                                <option selected name="carid" value="{{car[0]}}">{{car[1]}} {{car[2]}} ({{car[3]}})</option>
+                            {% else %}
+                                <option name="carid" value="{{car[0]}}">{{car[1]}} {{car[2]}} ({{car[3]}})</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr><td></td><td><input type="submit" value="Изменить"></td></tr>
+        </form>
+        {% endif %}
+    </table>
+
+    <table class="info_table">
+        <caption>Список перевозок</caption>
+        {% for transportation in transportations %}
+        <tr><td><a href="/transportations/{{transportation[0]}}">{{transportation[1]}} ({{transportation[8]}})</a></td></tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

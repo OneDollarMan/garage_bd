@@ -1,0 +1,8 @@
+pip==22.3
+setuptools==65.5.0
+wheel==0.38.1
+Flask~=2.2.2
+Flask-wtf
+mysql-connector-python~=8.0.31
+WTForms~=3.0.1
+PyYAML~=6.0

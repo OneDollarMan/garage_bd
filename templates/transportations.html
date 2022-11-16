@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Список перевозок</h1>
+
+<div class="content_flex">
+    <div class="content_func">
+        {% if session.role == 2 %}
+        <details>
+            <summary>Добавить перевозку</summary>
+            <div class="form_div">
+                <form method="post" action="transportations/add">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input type="datetime-local" name="datetime">
+                    <select name="driverid">
+                        <option disabled selected>Выберите водителя</option>
+                        {% for driver in drivers %}
+                        <option name="driverid" value="{{driver[0]}}">{{driver[2]}}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="gasid">
+                        <option disabled selected>Выберите вид топлива</option>
+                        {% for gas in gases %}
+                        <option name="gasid" value="{{gas[0]}}">{{gas[1]}} ({{gas[2]}})</option>
+                        {% endfor %}
+                    </select>
+                    <select name="stationid">
+                        <option disabled selected>Выберите станцию</option>
+                        {% for station in stations %}
+                        <option name="stationid" value="{{station[0]}}">{{station[1]}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="amount" placeholder="Количество">
+                    <input type="submit" value="Добавить">
+                </form>
+            </div>
+        </details>
+        {% endif %}
+    </div>
+
+    <div class="table_div">
+        <table>
+            <tr>
+                <th>Номер</th>
+                <th>Дата</th>
+                <th>Водитель</th>
+                <th>Станция</th>
+                <th>Объем топлива</th>
+                <th>Статус</th>
+                {% if session.role == 2 %}
+                <th>Действия</th>
+                {% endif %}
+            </tr>
+            {% for transportation in transportations %}
+            <tr>
+                <td><a href="/transportations/{{transportation[0]}}">{{transportation[0]}}</a></td>
+                <td><a href="/transportations/{{transportation[0]}}">{{transportation[1]}}</a></td>
+                <td><a href="/transportations/{{transportation[0]}}">{{transportation[9]}}</a></td>
+                <td><a href="/transportations/{{transportation[0]}}">{{transportation[18]}}</a></td>
+                <td><a href="/transportations/{{transportation[0]}}">{{transportation[5]}}</a></td>
+                <td><a href="/transportations/{{transportation[0]}}">{{transportation[21]}}</a></td>
+                {% if session.role == 2 %}
+                <td><a href="/transportations/rm/{{transportation[0]}}">×</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+    {% endblock %}

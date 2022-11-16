@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Список автомобилей</h1>
+
+<div class="content_flex">
+    <div class="content_func">
+        {% if session.role == 2 %}
+        <details>
+            <summary>Добавить автомобиль</summary>
+            <div class="form_div">
+                <form method="post" action="cars/add">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input type="text" name="brand" placeholder="Бренд">
+                    <input type="text" name="model" placeholder="Модель">
+                    <input type="text" name="plate" placeholder="Госномер">
+                    <input type="text" name="year" placeholder="Год выпуска">
+                    <input type="submit" value="Добавить">
+                </form>
+            </div>
+        </details>
+        {% endif %}
+    </div>
+
+    <div class="table_div">
+        <table>
+            <tr>
+                <th>Номер</th>
+                <th>Бренд</th>
+                <th>Модель</th>
+                <th>Госномер</th>
+                <th>Год выпуска</th>
+                {% if session.role == 2 %}
+                <th>Действия</th>
+                {% endif %}
+            </tr>
+            {% for car in cars %}
+            <tr>
+                <td><a href="/cars/{{car[0]}}">{{car[0]}}</a></td>
+                <td><a href="/cars/{{car[0]}}">{{car[1]}}</a></td>
+                <td><a href="/cars/{{car[0]}}">{{car[2]}}</a></td>
+                <td><a href="/cars/{{car[0]}}">{{car[3]}}</a></td>
+                <td><a href="/cars/{{car[0]}}">{{car[4]}}</a></td>
+                {% if session.role == 2 %}
+                <td><a href="/cars/rm/{{car[0]}}">×</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}
