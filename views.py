@@ -63,7 +63,8 @@ def cars_add():
     if session.get('role') == gr.ROLE_SUPERVISOR:
         if request.form['brand'] and request.form['model'] and request.form['year'] and request.form['plate']:
             if request.form['year'] <= '2022':
-                gr.add_car(request.form['brand'], request.form['model'], request.form['plate'], request.form['year'])
+                if not gr.add_car(request.form['brand'], request.form['model'], request.form['plate'], request.form['year']):
+                    flash('Введите уникальный госномер')
             else:
                 flash("Введите корректный год")
         else:
@@ -214,10 +215,13 @@ def transportations_add():
         s = request.form.get('stationid')
         a = request.form['amount']
         if dt and d and g and s and a:
-            if gr.add_transportation(datetime=dt, driverid=int(d), gasid=int(g), stationid=int(s), amount=int(a)):
-                app.logger.warning(f'New transportation was added by {session.get("username")}')
+            if gr.check_tr_date(d, dt):
+                if gr.add_transportation(datetime=dt, driverid=int(d), gasid=int(g), stationid=int(s), amount=int(a)):
+                    app.logger.warning(f'New transportation was added by {session.get("username")}')
+                else:
+                    flash('Недостаточно топлива')
             else:
-                flash('Недостаточно топлива')
+                flash('Время уже занято')
         else:
             flash('Заполните форму')
     return redirect(url_for("transportations"))

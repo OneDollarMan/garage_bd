@@ -1,3 +1,5 @@
+import datetime
+
 from mysql.connector import connect, Error
 
 
@@ -22,12 +24,13 @@ class GarageRepo:
                 "INSERT INTO user SET username='%s', fio='%s', password='%s', role=0" % (username, fio, password))
             self.get_all_zero_users = lambda: self.raw_query("SELECT * FROM user WHERE role=0")
 
-            self.add_car = lambda brand, model, plate, year: self.write_query(
+            self.insert_car = lambda brand, model, plate, year: self.write_query(
                 "INSERT INTO car SET brand='%s', model='%s', plate='%s', year=%d" % (
                     brand, model, plate, int(year)))
             self.get_cars = lambda: self.raw_query("SELECT * FROM garage.car")
             self.rm_car = lambda idcar: self.write_query("DELETE FROM car WHERE idcar=%d" % int(idcar))
             self.get_car = lambda idcar: self.raw_query("SELECT * FROM car WHERE idcar = %d LIMIT 1" % idcar)
+            self.get_car_by_plate = lambda plate: self.raw_query(f"SELECT * FROM car WHERE plate='{plate}'")
 
             self.get_driver = lambda driverid: self.raw_query(
                 "SELECT * FROM user JOIN car ON user.car = car.idcar WHERE iduser = %d" % driverid)
@@ -132,10 +135,26 @@ class GarageRepo:
             self.cursor.execute(query)
             return [[it for it in item] for item in self.cursor.fetchall()]
 
+    def add_car(self, brand, model, plate, year):
+        plate = plate.upper()
+        if not self.get_car_by_plate(plate):
+            self.insert_car(brand, model, plate, year)
+            return True
+        return False
+
     def remove_car(self, carid):
         if carid:
             self.write_query("UPDATE user SET car = NULL WHERE car = %d" % carid)
             self.rm_car(carid)
+
+    def check_tr_date(self, id, new_date):
+        new_date = datetime.datetime.strptime(new_date, '%Y-%m-%dT%H:%M').strftime('%Y-%m-%d %H')
+        q = self.raw_query(f"SELECT date FROM transportation JOIN user ON transportation.driver=user.iduser WHERE car=(SELECT car FROM user WHERE iduser={id})")
+        for date in q:
+            date = date[0].strftime('%Y-%m-%d %H')
+            if date == new_date:
+                return False
+        return True
 
     def add_transportation(self, gasid, amount, datetime, driverid, stationid):
         q = self.get_one_query("SELECT remain FROM gas WHERE idgas=%d" % gasid)

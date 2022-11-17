@@ -16,7 +16,7 @@
                     <select name="carid">
                         <option disabled selected>Выберите автомобиль</option>
                         {% for car in cars %}
-                        <option name="carid" value="{{car[0]}}">{{car[1]}} {{car[2]}} ({{car[3]}}г)</option>
+                        <option name="carid" value="{{car[0]}}">{{car[1]}} {{car[2]}} ({{car[3]}})</option>
                         {% endfor %}
                     </select>
                     <input type="submit" value="Добавить">
