@@ -225,7 +225,7 @@ def transportations_add():
 
 @app.route("/transportations/edit", methods=['POST'])
 def transportations_edit():
-    if session.get('role') == gr.ROLE_DRIVER:
+    if session.get('role') >= gr.ROLE_DRIVER:
         id = request.form['trid']
         st = request.form['status']
         if id and st:
