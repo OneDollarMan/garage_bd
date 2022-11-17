@@ -148,11 +148,11 @@ class GarageRepo:
             self.rm_car(carid)
 
     def check_tr_date(self, id, new_date):
-        new_date = datetime.datetime.strptime(new_date, '%Y-%m-%dT%H:%M').strftime('%Y-%m-%d %H')
+        new_date = datetime.datetime.strptime(new_date, '%Y-%m-%dT%H:%M')
         q = self.raw_query(f"SELECT date FROM transportation JOIN user ON transportation.driver=user.iduser WHERE car=(SELECT car FROM user WHERE iduser={id})")
         for date in q:
-            date = date[0].strftime('%Y-%m-%d %H')
-            if date == new_date:
+            date = date[0]
+            if (new_date - date).total_seconds() < 3600:
                 return False
         return True
 
