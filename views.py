@@ -5,7 +5,7 @@ from __init__ import app
 import forms
 import repo
 
-gr = repo.GarageRepo(host=app.config['HOST'], user=app.config['USER'], password=app.config['PASSWORD'], db=app.config['DB'])
+gr = repo.GarageRepo(host=app.config['HOST'], user=app.config['USER'], password=app.config['PASSWORD'], db=app.config['DB'])  # Создание объекта репозитория
 
 
 @app.route("/")
@@ -82,8 +82,7 @@ def cars_rm(carid):
 
 @app.route("/drivers")
 def drivers():
-    return render_template('drivers.html', title="Водители", cars=gr.get_cars(), drivers=gr.get_drivers(),
-                           users=gr.get_all_zero_users())
+    return render_template('drivers.html', title="Водители", cars=gr.get_cars(), drivers=gr.get_drivers())
 
 
 @app.route("/drivers/<int:driverid>")
@@ -234,7 +233,7 @@ def transportations_edit():
         st = request.form['status']
         if id and st:
             gr.edit_tr_status(int(id), int(st))
-            app.logger.warning(f'Transportation id {id} was changed to "{gr.get_var(st)[0][0]}" by {session.get("username")}')
+            app.logger.warning(f'Transportation id {id} was changed to "{gr.get_var(st)[0][0]}" by {session.get("username")}')  # Добавление записи в логгер
         return redirect(url_for("transportation", transportationid=request.form['trid']))
     else:
         return redirect(url_for('transportations'))

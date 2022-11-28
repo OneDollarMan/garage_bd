@@ -4,25 +4,23 @@ from mysql.connector import connect, Error
 
 
 class GarageRepo:
-    ROLE_USER = 0
     ROLE_DRIVER = 1
     ROLE_SUPERVISOR = 2
 
-    def __init__(self, host, user, password, db):
+    def __init__(self, host, user, password, db):  # Конструктор класса
         self.connection = None
         self.cursor = None
         self.connect_to_db(host, user, password, db)
         if self.connection is not None and self.cursor is not None:
             self.select_db(db)
 
-            self.get_tables = lambda: self.raw_query("SHOW TABLES")
+            self.get_tables = lambda: self.raw_query("SHOW TABLES")  # Лямбды это запросы к бд
 
             self.get_user = lambda username: self.raw_query("SELECT * FROM user WHERE username='%s'" % username)
             self.login_user = lambda username, password: self.get_query(
                 """SELECT * FROM user WHERE username=%(u)s AND password=%(p)s""", args={'u': username, 'p': password})
             self.add_user = lambda username, fio, password: self.write_query(
                 "INSERT INTO user SET username='%s', fio='%s', password='%s', role=0" % (username, fio, password))
-            self.get_all_zero_users = lambda: self.raw_query("SELECT * FROM user WHERE role=0")
 
             self.insert_car = lambda brand, model, plate, year: self.write_query(
                 "INSERT INTO car SET brand='%s', model='%s', plate='%s', year=%d" % (
@@ -52,7 +50,7 @@ class GarageRepo:
             self.rm_gas = lambda gasid: self.write_query("DELETE FROM gas WHERE idgas='%d'" % gasid)
             self.add_gas_amount = lambda gasid, amount: self.write_query(
                 "UPDATE gas SET remain = remain + %d WHERE idgas = %d AND remain + %d > remain" % (
-                amount, gasid, amount))
+                    amount, gasid, amount))
             self.change_gas_amount = lambda gasid, amount: self.write_query(
                 "UPDATE gas SET remain = remain + %d WHERE idgas = %d" % (amount, gasid))
 
@@ -85,7 +83,7 @@ class GarageRepo:
         else:
             print('connection failed')
 
-    def connect_to_db(self, host, user, password, db):
+    def connect_to_db(self, host, user, password, db):  # Подключение к бд и загрузка дампа
         try:
             self.connection = connect(host=host, user=user, password=password)
             self.cursor = self.connection.cursor()
@@ -104,18 +102,18 @@ class GarageRepo:
     def select_db(self, db):
         self.cursor.execute(f"USE {db}")
 
-    def raw_query(self, query):
+    def raw_query(self, query):  # Функция выполнения запроса к бд
         if self.cursor and query:
             self.cursor.execute(query)
             return self.cursor.fetchall()
 
-    def write_query(self, query):
+    def write_query(self, query):  # Функция записи данных в бд
         if self.cursor and query:
             self.cursor.execute(query)
             self.connection.commit()
             return self.cursor.fetchall()
 
-    def get_one_query(self, query):
+    def get_one_query(self, query):  # Ниже то же самое, отличие в выводе результата
         if self.cursor and query:
             self.cursor.execute(query)
             return self.cursor.fetchone()[0]
@@ -135,28 +133,29 @@ class GarageRepo:
             self.cursor.execute(query)
             return [[it for it in item] for item in self.cursor.fetchall()]
 
-    def add_car(self, brand, model, plate, year):
+    def add_car(self, brand, model, plate, year):  # Добавление авто
         plate = plate.upper()
         if not self.get_car_by_plate(plate):
             self.insert_car(brand, model, plate, year)
             return True
         return False
 
-    def remove_car(self, carid):
+    def remove_car(self, carid):  # Удаление авто
         if carid:
             self.write_query("UPDATE user SET car = NULL WHERE car = %d" % carid)
             self.rm_car(carid)
 
-    def check_tr_date(self, id, new_date):
+    def check_tr_date(self, id, new_date):  # Проверка даты транспортировки при добавлении
         new_date = datetime.datetime.strptime(new_date, '%Y-%m-%dT%H:%M')
-        q = self.raw_query(f"SELECT date FROM transportation JOIN user ON transportation.driver=user.iduser WHERE car=(SELECT car FROM user WHERE iduser={id})")
+        q = self.raw_query(
+            f"SELECT date FROM transportation JOIN user ON transportation.driver=user.iduser WHERE car=(SELECT car FROM user WHERE iduser={id})")
         for date in q:
             date = date[0]
             if (new_date - date).total_seconds() < 3600:
                 return False
         return True
 
-    def add_transportation(self, gasid, amount, datetime, driverid, stationid):
+    def add_transportation(self, gasid, amount, datetime, driverid, stationid):  # Добавление транспортировки
         q = self.get_one_query("SELECT remain FROM gas WHERE idgas=%d" % gasid)
         if q >= amount:
             self.add_tr(datetime, driverid, gasid, stationid, amount)
@@ -165,15 +164,16 @@ class GarageRepo:
         else:
             return False
 
-    def add_driver(self, username, password, fio, carid):
+    def add_driver(self, username, password, fio, carid):  # Добавление водителя
         if not self.get_user(username):
             self.reg_driver(username, password, fio, carid)
             return True
         else:
             return False
 
-    def delete_transportation(self, transportationid):
+    def delete_transportation(self, transportationid):  # Удаление транспортировки
         if transportationid:
-            amount = self.get_query(f"SELECT gas, gas_amount FROM transportation WHERE idtransportation='%(id)s'", args={'id': transportationid})
+            amount = self.get_query(f"SELECT gas, gas_amount FROM transportation WHERE idtransportation='%(id)s'",
+                                    args={'id': transportationid})
             self.change_gas_amount(gasid=amount[0], amount=amount[1])
             self.rm_tr(transportationid)
