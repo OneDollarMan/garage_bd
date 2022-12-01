@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, validators, SubmitField, DecimalField, SelectField, DateTimeLocalField
+from wtforms import StringField, BooleanField, validators, SubmitField, DecimalField, SelectField, DateTimeLocalField, \
+    PasswordField
 from wtforms.validators import Length, NumberRange, InputRequired, Regexp, ValidationError, Optional
 
 rus_length = Length(min=1, max=45, message='Значение поля должно быть длиной от %(min)d до %(max)d символов')
@@ -19,7 +20,7 @@ def date_check(form, field):
 
 class LoginForm(FlaskForm):
     login = StringField('login')
-    password = StringField('password')
+    password = PasswordField('password')
     remember_me = BooleanField('remember_me', default=False)
 
 
