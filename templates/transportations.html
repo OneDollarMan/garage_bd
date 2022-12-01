@@ -8,33 +8,31 @@
         <details>
             <summary>Добавить перевозку</summary>
             <div class="form_div">
-                <form method="post" action="transportations/add">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <input type="datetime-local" name="datetime">
-                    <select name="driverid">
-                        <option disabled selected>Выберите водителя</option>
-                        {% for driver in drivers %}
-                        <option name="driverid" value="{{driver[0]}}">{{driver[2]}}</option>
-                        {% endfor %}
-                    </select>
-                    <select name="gasid">
-                        <option disabled selected>Выберите вид топлива</option>
-                        {% for gas in gases %}
-                        <option name="gasid" value="{{gas[0]}}">{{gas[1]}} ({{gas[2]}})</option>
-                        {% endfor %}
-                    </select>
-                    <select name="stationid">
-                        <option disabled selected>Выберите станцию</option>
-                        {% for station in stations %}
-                        <option name="stationid" value="{{station[0]}}">{{station[1]}} ({{station[2]}})</option>
-                        {% endfor %}
-                    </select>
-                    <input type="text" name="amount" placeholder="Количество">
-                    <input type="submit" value="Добавить">
+                <form method="post">
+                    {{ form.csrf_token() }}
+                    {{ form.date.label }} {{ form.date }}
+                    {{ form.driver.label }} {{ form.driver }}
+                    {{ form.gas.label }} {{ form.gas }}
+                    {{ form.station.label }} {{ form.station }}
+                    {{ form.amount.label }} {{ form.amount }}
+                    {{ form.submit }}
                 </form>
             </div>
         </details>
         {% endif %}
+        <details>
+            <summary>Фильтры</summary>
+            <div class="form_div">
+                <form method="post">
+                    {{ filter_form.csrf_token() }}
+                    {{ filter_form.start_date.label }} {{ filter_form.start_date }}
+                    {{ filter_form.end_date.label }} {{ filter_form.end_date }}
+                    {{ filter_form.driver2.label }} {{ filter_form.driver2 }}
+                    {{ filter_form.status.label }} {{ filter_form.status }}
+                    {{ filter_form.submit2 }}
+                </form>
+            </div>
+        </details>
     </div>
 
     <div class="table_div">
@@ -51,6 +49,7 @@
                 {% endif %}
             </tr>
             {% for transportation in transportations %}
+            {% if transportation[12] == 1 or transportation[20] > 0 %}
             <tr>
                 <td><a href="/transportations/{{transportation[0]}}">{{transportation[0]}}</a></td>
                 <td><a href="/transportations/{{transportation[0]}}">{{transportation[1]}}</a></td>
@@ -62,6 +61,7 @@
                 <td><a href="/transportations/rm/{{transportation[0]}}">×</a></td>
                 {% endif %}
             </tr>
+            {% endif %}
             {% endfor %}
         </table>
     </div>

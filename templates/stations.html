@@ -8,11 +8,11 @@
         <details>
             <summary>Добавить станцию</summary>
             <div class="form_div">
-                <form method="post" action="stations/add">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <input type="text" name="name" placeholder="Название">
-                    <input type="text" name="address" placeholder="Адрес">
-                    <input type="submit" value="Добавить">
+                <form method="post">
+                    {{ form.csrf_token() }}
+                    {{ form.name.label }} {{ form.name }}
+                    {{ form.address.label }} {{ form.address }}
+                    {{ form.submit }}
                 </form>
             </div>
         </details>

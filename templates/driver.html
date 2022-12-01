@@ -33,7 +33,7 @@
                 <td>Автомобиль</td>
                 <td>
                     <select name="carid">
-                        <option disabled selected>Выберите автомобиль</option>
+                        <option disabled selected value="">Выберите автомобиль</option>
                         {% for car in cars %}
                             {% if car[0] == driver[5] %}
                                 <option selected name="carid" value="{{car[0]}}">{{car[1]}} {{car[2]}} ({{car[3]}})</option>

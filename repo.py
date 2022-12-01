@@ -16,11 +16,10 @@ class GarageRepo:
 
             self.get_tables = lambda: self.raw_query("SHOW TABLES")  # Лямбды это запросы к бд
 
-            self.get_user = lambda username: self.raw_query("SELECT * FROM user WHERE username='%s'" % username)
+            self.get_user = lambda username: self.raw_query(
+                "SELECT * FROM user WHERE username='%s' AND role != '0'" % username)
             self.login_user = lambda username, password: self.get_query(
                 """SELECT * FROM user WHERE username=%(u)s AND password=%(p)s""", args={'u': username, 'p': password})
-            self.add_user = lambda username, fio, password: self.write_query(
-                "INSERT INTO user SET username='%s', fio='%s', password='%s', role=0" % (username, fio, password))
 
             self.insert_car = lambda brand, model, plate, year: self.write_query(
                 "INSERT INTO car SET brand='%s', model='%s', plate='%s', year=%d" % (
@@ -29,9 +28,10 @@ class GarageRepo:
             self.rm_car = lambda idcar: self.write_query("DELETE FROM car WHERE idcar=%d" % int(idcar))
             self.get_car = lambda idcar: self.raw_query("SELECT * FROM car WHERE idcar = %d LIMIT 1" % idcar)
             self.get_car_by_plate = lambda plate: self.raw_query(f"SELECT * FROM car WHERE plate='{plate}'")
+            self.select_cars = lambda: self.raw_query("SELECT idcar, CONCAT(brand, ' ', model, ' ', plate) FROM car")
 
             self.get_driver = lambda driverid: self.raw_query(
-                "SELECT * FROM user JOIN car ON user.car = car.idcar WHERE iduser = %d" % driverid)
+                "SELECT * FROM user LEFT JOIN car ON user.car = car.idcar WHERE iduser = %d" % driverid)
             self.get_drivers = lambda: self.raw_query(
                 "SELECT * FROM user LEFT JOIN car ON user.car = car.idcar WHERE user.role=1")
             self.reg_driver = lambda u, p, fio, carid: self.write_query(
@@ -43,6 +43,7 @@ class GarageRepo:
                 "UPDATE user SET fio = '%s', car = %d WHERE iduser = %d" % (name, carid, driverid))
             self.get_driver_transportations = lambda driverid: self.raw_query(
                 "SELECT * FROM transportation JOIN var ON status=var.idvar WHERE driver = %d" % driverid)
+            self.select_drivers = lambda: self.raw_query("SELECT iduser, fio FROM user WHERE role=1")
 
             self.get_gases = lambda: self.raw_query("SELECT * FROM garage.gas")
             self.add_gas = lambda brand, octane: self.write_query(
@@ -53,6 +54,7 @@ class GarageRepo:
                     amount, gasid, amount))
             self.change_gas_amount = lambda gasid, amount: self.write_query(
                 "UPDATE gas SET remain = remain + %d WHERE idgas = %d" % (amount, gasid))
+            self.select_gases = lambda: self.raw_query("SELECT idgas, CONCAT(brand, ' ', octane) FROM gas")
 
             self.get_stations = lambda: self.raw_query("SELECT * FROM station")
             self.get_station = lambda stationid: self.raw_query("SELECT * FROM station WHERE idstation=%d" % stationid)
@@ -61,6 +63,8 @@ class GarageRepo:
             self.rm_station = lambda stationid: self.write_query("DELETE FROM station WHERE idstation='%d'" % stationid)
             self.get_station_transportations = lambda stationid: self.raw_query(
                 "SELECT * FROM transportation WHERE station = %d" % stationid)
+            self.select_stations = lambda: self.raw_query(
+                "SELECT idstation, CONCAT(name, ' (', address, ')') FROM station")
 
             self.add_tr = lambda datetime, driverid, gasid, stationid, amount: self.write_query(
                 "INSERT INTO transportation SET date='%s', driver='%d', gas=%d, station=%d, gas_amount=%d" %
@@ -72,6 +76,8 @@ class GarageRepo:
             self.edit_tr_status = lambda trid, status: self.raw_query(
                 "UPDATE transportation SET status=%d WHERE idtransportation=%d" % (status, trid))
             self.rm_tr = lambda id: self.write_query(f"DELETE FROM transportation WHERE idtransportation='{id}'")
+
+            self.select_statuses = lambda: self.raw_query("SELECT idvar, text FROM var")
 
             self.get_vars = lambda: self.raw_query("SELECT * FROM var")
             self.get_var = lambda id: self.raw_query(f"SELECT text FROM var WHERE idvar='{id}'")
@@ -145,13 +151,20 @@ class GarageRepo:
             self.write_query("UPDATE user SET car = NULL WHERE car = %d" % carid)
             self.rm_car(carid)
 
+    def remove_station(self, id):
+        self.rm_station(id)
+        self.write_query(f"UPDATE transportation SET station='0' WHERE station='{id}'")
+
+    def remove_gas(self, id):
+        self.rm_gas(id)
+        self.write_query(f"UPDATE transportation SET gas='0' WHERE gas='{id}'")
+
     def check_tr_date(self, id, new_date):  # Проверка даты транспортировки при добавлении
-        new_date = datetime.datetime.strptime(new_date, '%Y-%m-%dT%H:%M')
         q = self.raw_query(
-            f"SELECT date FROM transportation JOIN user ON transportation.driver=user.iduser WHERE car=(SELECT car FROM user WHERE iduser={id})")
+            f"SELECT date FROM transportation JOIN user ON transportation.driver=user.iduser WHERE car=(SELECT car FROM user WHERE iduser={id}) AND gas != 0 AND station != 0")
         for date in q:
-            date = date[0]
-            if (new_date - date).total_seconds() < 3600:
+            print(new_date, date[0], (new_date - date[0]).total_seconds())
+            if abs((new_date - date[0]).total_seconds()) < 3600:
                 return False
         return True
 
@@ -177,3 +190,15 @@ class GarageRepo:
                                     args={'id': transportationid})
             self.change_gas_amount(gasid=amount[0], amount=amount[1])
             self.rm_tr(transportationid)
+
+    def get_tr_sorted(self, start_date, end_date, driver, status):
+        q = "SELECT * FROM transportation JOIN user, gas, station, var WHERE driver=iduser AND gas=idgas AND station=idstation AND status=idvar"
+        if start_date:
+            q = q + " AND date > '%s'" % start_date
+        if end_date:
+            q = q + " AND date < '%s'" % end_date
+        if driver:
+            q = q + " AND driver = '%d'" % int(driver)
+        if status:
+            q = q + " AND status = '%d'" % int(status)
+        return self.raw_query(q)

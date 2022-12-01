@@ -8,6 +8,12 @@ import repo
 gr = repo.GarageRepo(host=app.config['HOST'], user=app.config['USER'], password=app.config['PASSWORD'], db=app.config['DB'])  # Создание объекта репозитория
 
 
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(error)
+
+
 @app.route("/")
 def index():
     return render_template('index.html', title="Главная",
@@ -44,9 +50,16 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route("/cars")
+@app.route("/cars", methods=['GET', 'POST'])
 def cars():
-    return render_template('cars.html', title="Автомобили", cars=gr.get_cars())
+    form = forms.CarForm()
+    if form.validate_on_submit() and session.get('role') == gr.ROLE_SUPERVISOR:
+        if not gr.add_car(form.brand.data, form.model.data, form.plate.data, form.year.data):
+            flash('Введите уникальный госномер')
+        return redirect(url_for("cars"))
+    else:
+        flash_errors(form)
+    return render_template('cars.html', title="Автомобили", cars=gr.get_cars(), form=form)
 
 
 @app.route("/cars/<int:carid>")
@@ -58,20 +71,6 @@ def car(carid):
         return redirect(url_for('cars'))
 
 
-@app.route("/cars/add", methods=['POST'])
-def cars_add():
-    if session.get('role') == gr.ROLE_SUPERVISOR:
-        if request.form['brand'] and request.form['model'] and request.form['year'] and request.form['plate']:
-            if request.form['year'] <= '2022':
-                if not gr.add_car(request.form['brand'], request.form['model'], request.form['plate'], request.form['year']):
-                    flash('Введите уникальный госномер')
-            else:
-                flash("Введите корректный год")
-        else:
-            flash("Заполните форму")
-    return redirect(url_for("cars"))
-
-
 @app.route("/cars/rm/<int:carid>")
 def cars_rm(carid):
     if session.get('role') == gr.ROLE_SUPERVISOR:
@@ -80,9 +79,17 @@ def cars_rm(carid):
     return redirect(url_for("cars"))
 
 
-@app.route("/drivers")
+@app.route("/drivers", methods=['GET', 'POST'])
 def drivers():
-    return render_template('drivers.html', title="Водители", cars=gr.get_cars(), drivers=gr.get_drivers())
+    form = forms.DriverForm()
+    form.car.choices = gr.select_cars()
+    if form.validate_on_submit():
+        if gr.add_driver(form.username.data, hashlib.md5(form.password.data.encode('UTF-8')).hexdigest(), form.fio.data, form.car.data):
+            app.logger.warning(f'Driver "{form.username.data}" was added by {session.get("username")}')
+        else:
+            flash('Пользователь уже существует')
+        return redirect(url_for("drivers"))
+    return render_template('drivers.html', title="Водители", drivers=gr.get_drivers(), form=form)
 
 
 @app.route("/drivers/<int:driverid>")
@@ -94,25 +101,10 @@ def driver(driverid):
         return redirect(url_for('drivers'))
 
 
-@app.route("/drivers/add", methods=['POST'])
-def drivers_add():
-    if session.get('role') == gr.ROLE_SUPERVISOR:
-        u = request.form['username']
-        p = request.form['password']
-        f = request.form['fio']
-        c = request.form.get('carid')
-        if u and p and f and c:
-            gr.add_driver(u, hashlib.md5(p.encode('UTF-8')).hexdigest(), f, c)
-            app.logger.warning(f'Driver "{u}" was added by {session.get("username")}')
-        else:
-            flash('Заполните форму')
-    return redirect(url_for("drivers"))
-
-
 @app.route("/drivers/edit", methods=['POST'])
 def drivers_edit():
     if session.get('role') == gr.ROLE_SUPERVISOR:
-        if request.form['name'] and request.form['carid']:
+        if request.form['name'] and request.form.get('carid'):
             gr.edit_driver(int(request.form['driverid']), request.form['name'], int(request.form['carid']))
     return redirect(url_for("driver", driverid=request.form['driverid']))
 
@@ -125,26 +117,24 @@ def drivers_remove(driverid):
     return redirect(url_for("drivers"))
 
 
-@app.route("/gases")
+@app.route("/gases", methods=['GET', 'POST'])
 def gases():
-    return render_template('gases.html', title="Топливо", gases=gr.get_gases())
-
-
-@app.route("/gases/add", methods=['POST'])
-def gases_add():
-    if session.get('role') == gr.ROLE_SUPERVISOR:
-        if request.form['octane'] and request.form['brand']:
-            gr.add_gas(request.form['brand'], request.form['octane'])
-        else:
-            flash('Заполните форму')
-    return redirect(url_for("gases"))
+    form = forms.GasForm()
+    add_form = forms.GasAddForm()
+    add_form.gas.choices = gr.select_gases()
+    if form.validate_on_submit() and session.get('role') == gr.ROLE_SUPERVISOR:
+        gr.add_gas(form.brand.data, form.octane.data)
+        return redirect(url_for("gases"))
+    return render_template('gases.html', title="Топливо", gases=gr.get_gases(), form=form, add_form=add_form)
 
 
 @app.route("/gases/add_amount", methods=['POST'])
 def gases_add_amount():
     if session.get('role') == gr.ROLE_SUPERVISOR:
-        if request.form.get('gasid') and request.form['amount']:
-            gr.add_gas_amount(int(request.form['gasid']), int(request.form['amount']))
+        add_form = forms.GasAddForm()
+        add_form.gas.choices = gr.select_gases()
+        if add_form.validate_on_submit():
+            gr.add_gas_amount(int(add_form.gas.data), int(add_form.amount.data))
         else:
             flash('Заполните форму')
     return redirect(url_for("gases"))
@@ -154,13 +144,17 @@ def gases_add_amount():
 def gases_remove(gasid):
     if session.get('role') == gr.ROLE_SUPERVISOR:
         if gasid:
-            gr.rm_gas(gasid)
+            gr.remove_gas(gasid)
     return redirect(url_for("gases"))
 
 
-@app.route("/stations")
+@app.route("/stations", methods=['GET', 'POST'])
 def stations():
-    return render_template('stations.html', title="Станции", stations=gr.get_stations())
+    form = forms.StationForm()
+    if form.validate_on_submit() and session.get('role') == gr.ROLE_SUPERVISOR:
+        gr.add_station(form.name.data, form.address.data)
+        return redirect(url_for("stations"))
+    return render_template('stations.html', title="Станции", stations=gr.get_stations(), form=form)
 
 
 @app.route("/stations/<int:stationid>")
@@ -172,28 +166,44 @@ def station(stationid):
         return redirect(url_for('stations'))
 
 
-@app.route("/stations/add", methods=['POST'])
-def stations_add():
-    if session.get('role') == gr.ROLE_SUPERVISOR:
-        if request.form['name'] and request.form['address']:
-            gr.add_station(request.form['name'], request.form['address'])
-        else:
-            flash('Заполните форму')
-    return redirect(url_for("stations"))
-
-
 @app.route("/stations/rm/<int:stationid>")
 def stations_remove(stationid):
     if session.get('role') == gr.ROLE_SUPERVISOR:
         if stationid:
-            gr.rm_station(stationid)
+            gr.remove_station(stationid)
     return redirect(url_for("stations"))
 
 
-@app.route("/transportations")
+@app.route("/transportations", methods=['GET', 'POST'])
 def transportations():
-    return render_template('transportations.html', title="Перевозки", transportations=gr.get_trs(),
-                           gases=gr.get_gases(), drivers=gr.get_drivers(), stations=gr.get_stations())
+    form = forms.TransportationForm()
+    form.driver.choices = gr.select_drivers()
+    form.gas.choices = gr.select_gases()
+    form.station.choices = gr.select_stations()
+
+    filter_form = forms.FilterForm()
+    filter_form.driver2.choices = [("", "---")] + gr.select_drivers()
+    filter_form.status.choices = [("", "---")] + gr.select_statuses()
+
+    if filter_form.validate_on_submit():
+        s = filter_form.start_date.data
+        e = filter_form.end_date.data
+        d = filter_form.driver2.data
+        v = filter_form.status.data
+        return render_template('transportations.html', title="Перевозки", transportations=gr.get_tr_sorted(s, e, d, v), form=form, filter_form=filter_form)
+
+    if form.validate_on_submit() and session.get('role') == gr.ROLE_SUPERVISOR:
+        if gr.check_tr_date(form.driver.data, form.date.data):
+            if gr.add_transportation(datetime=form.date.data, driverid=int(form.driver.data), gasid=int(form.gas.data), stationid=int(form.station.data), amount=int(form.amount.data)):
+                app.logger.warning(f'New transportation was added by {session.get("username")}')
+            else:
+                flash('Недостаточно топлива')
+        else:
+            flash('Время уже занято')
+        return redirect(url_for('transportations'))
+    else:
+        flash_errors(form)
+    return render_template('transportations.html', title="Перевозки", transportations=gr.get_trs(), form=form, filter_form=filter_form)
 
 
 @app.route("/transportations/<int:transportationid>")
@@ -205,27 +215,6 @@ def transportation(transportationid):
         return redirect(url_for('transportations'))
 
 
-@app.route("/transportations/add", methods=['POST'])
-def transportations_add():
-    if session.get('role') == gr.ROLE_SUPERVISOR:
-        dt = request.form.get('datetime')
-        d = request.form.get('driverid')
-        g = request.form.get('gasid')
-        s = request.form.get('stationid')
-        a = request.form['amount']
-        if dt and d and g and s and a:
-            if gr.check_tr_date(d, dt):
-                if gr.add_transportation(datetime=dt, driverid=int(d), gasid=int(g), stationid=int(s), amount=int(a)):
-                    app.logger.warning(f'New transportation was added by {session.get("username")}')
-                else:
-                    flash('Недостаточно топлива')
-            else:
-                flash('Время уже занято')
-        else:
-            flash('Заполните форму')
-    return redirect(url_for("transportations"))
-
-
 @app.route("/transportations/edit", methods=['POST'])
 def transportations_edit():
     if session.get('role') >= gr.ROLE_DRIVER:
@@ -233,6 +222,7 @@ def transportations_edit():
         st = request.form['status']
         if id and st:
             gr.edit_tr_status(int(id), int(st))
+            flash('Статус изменен')
             app.logger.warning(f'Transportation id {id} was changed to "{gr.get_var(st)[0][0]}" by {session.get("username")}')  # Добавление записи в логгер
         return redirect(url_for("transportation", transportationid=request.form['trid']))
     else:

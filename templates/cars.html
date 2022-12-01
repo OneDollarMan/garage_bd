@@ -8,13 +8,13 @@
         <details>
             <summary>Добавить автомобиль</summary>
             <div class="form_div">
-                <form method="post" action="cars/add">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <input type="text" name="brand" placeholder="Бренд">
-                    <input type="text" name="model" placeholder="Модель">
-                    <input type="text" name="plate" placeholder="Госномер">
-                    <input type="text" name="year" placeholder="Год выпуска">
-                    <input type="submit" value="Добавить">
+                <form method="post">
+                    {{ form.csrf_token() }}
+                    {{ form.brand.label }} {{ form.brand }}
+                    {{ form.model.label }} {{ form.model }}
+                    {{ form.plate.label }} {{ form.plate }}
+                    {{ form.year.label }} {{ form.year }}
+                    {{ form.submit }}
                 </form>
             </div>
         </details>

@@ -8,18 +8,13 @@
         <details>
             <summary>Добавить водителя</summary>
             <div class="form_div">
-                <form method="post" action="drivers/add">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <input type="text" name="username" placeholder="Юзернейм">
-                    <input type="text" name="password" placeholder="Пароль">
-                    <input type="text" name="fio" placeholder="ФИО">
-                    <select name="carid">
-                        <option disabled selected>Выберите автомобиль</option>
-                        {% for car in cars %}
-                        <option name="carid" value="{{car[0]}}">{{car[1]}} {{car[2]}} ({{car[3]}})</option>
-                        {% endfor %}
-                    </select>
-                    <input type="submit" value="Добавить">
+                <form method="post">
+                    {{ form.csrf_token() }}
+                    {{ form.username.label }} {{ form.username }}
+                    {{ form.password.label }} {{ form.password }}
+                    {{ form.fio.label }} {{ form.fio }}
+                    {{ form.car.label }} {{ form.car }}
+                    {{ form.submit }}
                 </form>
             </div>
         </details>
@@ -30,6 +25,7 @@
         <table>
             <tr>
                 <th>Номер</th>
+                <th>Юзернейм</th>
                 <th>ФИО</th>
                 <th>Автомобиль</th>
                 {% if session.role == 2 %}
@@ -39,6 +35,7 @@
             {% for driver in drivers %}
             <tr>
                 <td><a href="/drivers/{{driver[0]}}">{{driver[0]}}</a></td>
+                <td><a href="/drivers/{{driver[0]}}">{{driver[1]}}</a></td>
                 <td><a href="/drivers/{{driver[0]}}">{{driver[2]}}</a></td>
                 {% if driver[5] %}
                 <td><a href="/drivers/{{driver[0]}}">{{driver[7]}} {{driver[8]}} ({{driver[9]}})</a></td>

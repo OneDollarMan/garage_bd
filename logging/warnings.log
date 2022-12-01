@@ -127,3 +127,122 @@
 2022-11-28 19:39:46,309 - werkzeug - WARNING -  * Debugger is active!
 2022-11-28 19:40:12,183 - werkzeug - WARNING -  * Debugger is active!
 2022-11-28 19:40:56,492 - werkzeug - WARNING -  * Debugger is active!
+2022-11-28 20:15:32,406 - werkzeug - WARNING -  * Debugger is active!
+2022-11-28 20:15:39,938 - werkzeug - WARNING -  * Debugger is active!
+2022-11-28 20:15:47,482 - werkzeug - WARNING -  * Debugger is active!
+2022-11-28 20:26:08,367 - werkzeug - WARNING -  * Debugger is active!
+2022-11-28 20:26:20,929 - werkzeug - WARNING -  * Debugger is active!
+2022-11-28 20:41:02,370 - werkzeug - WARNING -  * Debugger is active!
+2022-11-29 14:05:40,596 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 16:32:33,060 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 16:33:58,286 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 16:34:38,458 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 16:35:05,443 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 16:37:45,587 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 17:39:55,090 - __init__ - WARNING - Transportation id 1 was changed to "Новый" by root
+2022-12-01 17:39:56,345 - __init__ - WARNING - Transportation id 1 was changed to "В пути" by root
+2022-12-01 17:47:56,565 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 17:48:53,226 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 17:50:56,916 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 17:54:10,885 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 17:57:18,426 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 17:57:24,858 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 17:57:53,856 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:01:20,006 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:08:58,607 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:10:40,206 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:10:51,790 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:11:15,646 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:14:09,038 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:16:05,168 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:17:33,707 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:17:47,337 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:19:15,672 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:19:48,713 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:20:18,638 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:20:33,284 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:20:44,822 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:20:51,309 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:21:09,400 - __init__ - WARNING - Driver "dasads" was added by root
+2022-12-01 18:22:06,412 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:22:35,399 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:25:12,533 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:25:40,510 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:25:57,384 - __init__ - WARNING - Driver "ddd" was added by root
+2022-12-01 18:27:10,850 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:31:34,107 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:31:49,851 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:32:38,382 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:35:41,888 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:36:30,308 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:39:54,359 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:40:32,503 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:41:55,748 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:42:57,420 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:44:03,187 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:44:44,395 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:48:01,471 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:48:22,201 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:50:00,781 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:54:31,507 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 18:55:21,061 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:00:04,150 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:00:18,775 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:00:56,103 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:01:59,941 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:03:40,760 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:04:04,638 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:06:18,950 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:06:26,507 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:06:56,535 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:08:07,509 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:08:24,182 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:09:59,691 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:10:44,008 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:13:17,821 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:13:54,043 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:14:31,168 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:14:31,650 - __init__ - WARNING - New transportation was added by root
+2022-12-01 19:16:18,001 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:17:53,621 - __init__ - WARNING - New transportation was added by root
+2022-12-01 19:26:58,769 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:28:05,664 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:28:21,427 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:28:26,831 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:28:33,244 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:28:52,811 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:29:31,099 - __init__ - WARNING - Driver "фывфыв" was added by root
+2022-12-01 19:30:48,567 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:31:07,063 - __init__ - WARNING - New transportation was added by root
+2022-12-01 19:35:34,540 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:35:50,174 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:35:55,608 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:36:23,202 - __init__ - WARNING - New transportation was added by root
+2022-12-01 19:37:03,382 - __init__ - WARNING - Transportation id 2 was changed to "В пути" by root
+2022-12-01 19:37:27,192 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:37:30,895 - __init__ - WARNING - Transportation id 2 was changed to "В пути" by root
+2022-12-01 19:37:34,071 - __init__ - WARNING - Transportation id 2 was changed to "Завершен" by root
+2022-12-01 19:37:35,226 - __init__ - WARNING - Transportation id 2 was changed to "Новый" by root
+2022-12-01 19:41:32,571 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:41:51,267 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:42:45,818 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:43:00,428 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:43:19,242 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:44:28,120 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:45:14,562 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:46:35,787 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:46:56,589 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:47:06,076 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:47:28,896 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:48:23,464 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:51:23,826 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:52:16,407 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:55:36,948 - __init__ - WARNING - Driver "aaaaaa" was added by root
+2022-12-01 19:56:41,065 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:56:57,757 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:57:22,703 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:57:49,607 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 19:57:57,974 - __init__ - WARNING - New transportation was added by root
+2022-12-01 19:59:40,276 - __init__ - WARNING - Transportation id 2 was changed to "В пути" by root
+2022-12-01 20:03:02,019 - __init__ - WARNING - New transportation was added by root
+2022-12-01 20:03:21,203 - __init__ - WARNING - Transportation id 4 was changed to "Завершен" by root

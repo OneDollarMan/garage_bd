@@ -8,11 +8,11 @@
         <details>
             <summary>Добавить топливо</summary>
             <div class="form_div">
-                <form method="post" action="gases/add">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <input type="text" name="brand" placeholder="Производитель">
-                    <input type="number" name="octane" placeholder="Октановое число">
-                    <input type="submit" value="Добавить">
+                <form method="post">
+                    {{ form.csrf_token() }}
+                    {{ form.brand.label }} {{ form.brand }}
+                    {{ form.octane.label }} {{ form.octane }}
+                    {{ form.submit }}
                 </form>
             </div>
         </details>
@@ -21,15 +21,10 @@
             <summary>Приход</summary>
             <div class="form_div">
                 <form method="post" action="gases/add_amount">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <select name="gasid">
-                        <option disabled selected>Выберите топливо</option>
-                        {% for gas in gases %}
-                        <option name="gasid" value="{{gas[0]}}">{{gas[1]}} ({{gas[2]}})</option>
-                        {% endfor %}
-                    </select>
-                    <input type="number" name="amount" placeholder="Количество">
-                    <input type="submit" value="Добавить">
+                    {{ add_form.csrf_token() }}
+                    {{ add_form.gas.label }} {{ add_form.gas }}
+                    {{ add_form.amount.label }} {{ add_form.amount }}
+                    {{ add_form.submit2 }}
                 </form>
             </div>
         </details>
