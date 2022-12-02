@@ -106,6 +106,7 @@ def drivers_edit():
     if session.get('role') == gr.ROLE_SUPERVISOR:
         if request.form['name'] and request.form.get('carid'):
             gr.edit_driver(int(request.form['driverid']), request.form['name'], int(request.form['carid']))
+            flash('Автомобиль изменен')
     return redirect(url_for("driver", driverid=request.form['driverid']))
 
 

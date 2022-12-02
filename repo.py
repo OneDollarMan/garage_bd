@@ -85,7 +85,7 @@ class GarageRepo:
             self.get_users_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.user WHERE role=1")
             self.get_gases_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.gas")
             self.get_stations_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.station")
-            self.get_transportations_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.transportation WHERE driver != 0 AND gas != 0 AND station != 0")
+            self.get_transportations_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.transportation t JOIN user u ON t.driver=u.iduser WHERE gas != 0 AND station != 0 AND (role != 0 OR status > 0)")
         else:
             print('connection failed')
 
@@ -153,7 +153,9 @@ class GarageRepo:
 
     def remove_station(self, id):
         self.rm_station(id)
-        self.write_query(f"UPDATE transportation SET station='0' WHERE station='{id}'")
+        ids = self.raw_query(f"SELECT idtransportation FROM transportation WHERE station='{id}'")
+        for i in ids:
+            self.delete_transportation(i[0])
 
     def remove_gas(self, id):
         self.rm_gas(id)

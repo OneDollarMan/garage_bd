@@ -255,3 +255,23 @@
 2022-12-02 10:26:36,944 - __init__ - WARNING - New transportation was added by root
 2022-12-02 10:30:46,487 - __init__ - WARNING - Driver "asdasd" was added by root
 2022-12-02 10:31:10,172 - __init__ - WARNING - New transportation was added by root
+2022-12-02 10:32:44,930 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:34:21,354 - __init__ - WARNING - Transportation id 2 was changed to "В пути" by root
+2022-12-02 10:35:00,353 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:35:05,862 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:35:32,697 - __init__ - WARNING - Transportation id 2 was changed to "Завершен" by root
+2022-12-02 10:40:14,173 - __init__ - WARNING - Transportation id 2 was changed to "Новый" by root
+2022-12-02 10:44:48,143 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:46:06,419 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:47:33,761 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:49:42,183 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:50:05,045 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:50:38,294 - __init__ - WARNING - New transportation was added by root
+2022-12-02 10:50:52,483 - __init__ - WARNING - New transportation was added by root
+2022-12-02 10:51:36,611 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:52:01,937 - __init__ - WARNING - New transportation was added by root
+2022-12-02 10:52:41,535 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:53:05,767 - __init__ - WARNING - New transportation was added by root
+2022-12-02 10:53:14,711 - __init__ - WARNING - New transportation was added by root
+2022-12-02 10:54:32,495 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:55:05,632 - werkzeug - WARNING -  * Debugger is active!
