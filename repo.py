@@ -85,7 +85,7 @@ class GarageRepo:
             self.get_users_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.user WHERE role=1")
             self.get_gases_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.gas")
             self.get_stations_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.station")
-            self.get_transportations_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.transportation")
+            self.get_transportations_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.transportation WHERE driver != 0 AND gas != 0 AND station != 0")
         else:
             print('connection failed')
 
