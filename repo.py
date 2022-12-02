@@ -19,7 +19,7 @@ class GarageRepo:
             self.get_user = lambda username: self.raw_query(
                 "SELECT * FROM user WHERE username='%s' AND role != '0'" % username)
             self.login_user = lambda username, password: self.get_query(
-                """SELECT * FROM user WHERE username=%(u)s AND password=%(p)s""", args={'u': username, 'p': password})
+                """SELECT * FROM user WHERE username=%(u)s AND password=%(p)s AND role != '0'""", args={'u': username, 'p': password})
 
             self.insert_car = lambda brand, model, plate, year: self.write_query(
                 "INSERT INTO car SET brand='%s', model='%s', plate='%s', year=%d" % (

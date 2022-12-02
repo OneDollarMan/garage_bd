@@ -275,3 +275,8 @@
 2022-12-02 10:53:14,711 - __init__ - WARNING - New transportation was added by root
 2022-12-02 10:54:32,495 - werkzeug - WARNING -  * Debugger is active!
 2022-12-02 10:55:05,632 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:59:09,636 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:59:23,953 - __init__ - WARNING - New transportation was added by root
+2022-12-02 10:59:26,040 - __init__ - WARNING - Transportation id 8 was changed to "Завершен" by root
+2022-12-02 11:04:04,903 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 11:04:50,373 - werkzeug - WARNING -  * Debugger is active!
