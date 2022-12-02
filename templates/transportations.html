@@ -49,7 +49,7 @@
                 {% endif %}
             </tr>
             {% for transportation in transportations %}
-            {% if transportation[12] == 1 or transportation[20] > 0 %}
+            {% if (transportation[2] != 0 and transportation[3] != 0 and transportation[4] != 0) or transportation[6] > 0 %}
             <tr>
                 <td><a href="/transportations/{{transportation[0]}}">{{transportation[0]}}</a></td>
                 <td><a href="/transportations/{{transportation[0]}}">{{transportation[1]}}</a></td>

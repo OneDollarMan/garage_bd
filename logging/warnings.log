@@ -246,3 +246,12 @@
 2022-12-01 19:59:40,276 - __init__ - WARNING - Transportation id 2 was changed to "В пути" by root
 2022-12-01 20:03:02,019 - __init__ - WARNING - New transportation was added by root
 2022-12-01 20:03:21,203 - __init__ - WARNING - Transportation id 4 was changed to "Завершен" by root
+2022-12-01 20:10:32,646 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 20:45:35,843 - werkzeug - WARNING -  * Debugger is active!
+2022-12-01 20:48:54,762 - __init__ - WARNING - New transportation was added by root
+2022-12-02 10:24:46,177 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:25:44,926 - werkzeug - WARNING -  * Debugger is active!
+2022-12-02 10:26:03,823 - __init__ - WARNING - Driver "фывфыв" was added by root
+2022-12-02 10:26:36,944 - __init__ - WARNING - New transportation was added by root
+2022-12-02 10:30:46,487 - __init__ - WARNING - Driver "asdasd" was added by root
+2022-12-02 10:31:10,172 - __init__ - WARNING - New transportation was added by root
