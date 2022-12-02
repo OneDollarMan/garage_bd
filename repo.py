@@ -153,6 +153,7 @@ class GarageRepo:
 
     def remove_station(self, id):
         self.rm_station(id)
+        self.write_query(f"UPDATE transportation SET station='0' WHERE station='{id}'")
         ids = self.raw_query(f"SELECT idtransportation FROM transportation WHERE station='{id}' and status != '2'")
         for i in ids:
             self.delete_transportation(i[0])
