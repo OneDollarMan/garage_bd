@@ -36,7 +36,7 @@ def login():
             session['role'] = user[4]
             return redirect(url_for('index'))
         else:
-            flash('Неверный логин или пароль!')
+            flash('Пользователя с данной связкой логин-пароль не существует!')
     return render_template('login.html', title='Авторизация', form=form)
 
 
