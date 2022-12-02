@@ -153,7 +153,7 @@ class GarageRepo:
 
     def remove_station(self, id):
         self.rm_station(id)
-        ids = self.raw_query(f"SELECT idtransportation FROM transportation WHERE station='{id}'")
+        ids = self.raw_query(f"SELECT idtransportation FROM transportation WHERE station='{id}' and status != '2'")
         for i in ids:
             self.delete_transportation(i[0])
 
