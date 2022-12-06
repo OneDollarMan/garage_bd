@@ -1,5 +1,6 @@
 import datetime
 
+import pyotp
 from mysql.connector import connect, Error
 
 
@@ -18,8 +19,13 @@ class GarageRepo:
 
             self.get_user = lambda username: self.raw_query(
                 "SELECT * FROM user WHERE username='%s' AND role != '0'" % username)
-            self.login_user = lambda username, password: self.get_query(
-                """SELECT * FROM user WHERE username=%(u)s AND password=%(p)s AND role != '0'""", args={'u': username, 'p': password})
+            self.login_user = lambda username, password: self.raw_query(
+                """SELECT * FROM user WHERE username=%(u)s AND password=%(p)s AND role != '0'""",
+                args={'u': username, 'p': password})
+            self.login_user_vulnerable = lambda username, password: self.raw_query(
+                f"SELECT * FROM user WHERE username='{username}' AND password='{password}' AND role != '0'")
+            self.change_user_secret_key = lambda username, secret_key: self.write_query(
+                f"UPDATE user SET secret_key='{secret_key}' WHERE username='{username}'")
 
             self.insert_car = lambda brand, model, plate, year: self.write_query(
                 "INSERT INTO car SET brand='%s', model='%s', plate='%s', year=%d" % (
@@ -34,8 +40,8 @@ class GarageRepo:
                 "SELECT * FROM user LEFT JOIN car ON user.car = car.idcar WHERE iduser = %d" % driverid)
             self.get_drivers = lambda: self.raw_query(
                 "SELECT * FROM user LEFT JOIN car ON user.car = car.idcar WHERE user.role=1")
-            self.reg_driver = lambda u, p, fio, carid: self.write_query(
-                f"INSERT INTO user SET username='{u}', password='{p}', fio='{fio}', role=1, car=(SELECT idcar FROM car WHERE idcar = '{carid}')")
+            self.reg_driver = lambda u, p, fio, carid, secret_key: self.write_query(
+                f"INSERT INTO user SET username='{u}', password='{p}', fio='{fio}', role=1, car=(SELECT idcar FROM car WHERE idcar = '{carid}'), secret_key='{secret_key}'")
             self.get_drivers_of_car = lambda carid: self.raw_query("SELECT * FROM user WHERE car = %d" % carid)
             self.remove_driver = lambda iddriver: self.write_query(
                 "UPDATE user SET role=0, car=0 WHERE iduser=%d" % int(iddriver))
@@ -85,7 +91,8 @@ class GarageRepo:
             self.get_users_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.user WHERE role=1")
             self.get_gases_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.gas")
             self.get_stations_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.station")
-            self.get_transportations_count = lambda: self.get_one_query("SELECT COUNT(1) FROM garage.transportation t JOIN user u ON t.driver=u.iduser WHERE gas != 0 AND station != 0 AND (role != 0 OR status > 0)")
+            self.get_transportations_count = lambda: self.get_one_query(
+                "SELECT COUNT(1) FROM garage.transportation t JOIN user u ON t.driver=u.iduser WHERE gas != 0 AND station != 0 AND (role != 0 OR status > 0)")
         else:
             print('connection failed')
 
@@ -108,9 +115,12 @@ class GarageRepo:
     def select_db(self, db):
         self.cursor.execute(f"USE {db}")
 
-    def raw_query(self, query):  # Функция выполнения запроса к бд
+    def raw_query(self, query, args=None):  # Функция выполнения запроса к бд
         if self.cursor and query:
-            self.cursor.execute(query)
+            if args:
+                self.cursor.execute(query, args)
+            else:
+                self.cursor.execute(query)
             return self.cursor.fetchall()
 
     def write_query(self, query):  # Функция записи данных в бд
@@ -182,7 +192,7 @@ class GarageRepo:
 
     def add_driver(self, username, password, fio, carid):  # Добавление водителя
         if not self.get_user(username):
-            self.reg_driver(username, password, fio, carid)
+            self.reg_driver(username, password, fio, carid, pyotp.random_base32())
             return True
         else:
             return False
@@ -205,3 +215,19 @@ class GarageRepo:
         if status:
             q = q + " AND status = '%d'" % int(status)
         return self.raw_query(q)
+
+    def add_secret_key_to_user(self, username, secret_key):
+        user_key = self.raw_query(f"SELECT secret_key FROM user WHERE username='{username}'")
+        if user_key[0][0] is None:
+            self.change_user_secret_key(username, secret_key)
+            return True
+        return False
+
+    def toggle_2fa(self, id):
+        user_2fa = self.raw_query(f"SELECT 2fa FROM user WHERE iduser='{id}'")
+        if user_2fa[0][0] == 0:
+            self.write_query(f"UPDATE user SET 2fa='1' WHERE iduser='{id}'")
+            return True
+        else:
+            self.write_query(f"UPDATE user SET 2fa='0' WHERE iduser='{id}'")
+            return False

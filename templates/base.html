@@ -20,6 +20,7 @@
 
             <ul class="header_menu">
                 {% if session.loggedin %}
+                    <li><a href="/2fa">2FA</a></li>
                     {% if session.role == 1 %}
                         <li><a href="/drivers/{{session.id}}">Добро пожаловать, {{ session.username }}</a></li>
                     {% else %}

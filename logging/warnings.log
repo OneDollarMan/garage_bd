@@ -280,3 +280,86 @@
 2022-12-02 10:59:26,040 - __init__ - WARNING - Transportation id 8 was changed to "«‡‚Â¯ÂÌ" by root
 2022-12-02 11:04:04,903 - werkzeug - WARNING -  * Debugger is active!
 2022-12-02 11:04:50,373 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 20:37:59,607 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 20:41:24,450 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 20:50:41,716 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 20:51:10,051 - __init__ - WARNING - Driver "root1" was added by root
+2022-12-05 20:51:16,455 - __init__ - WARNING - Driver "root2" was added by root
+2022-12-05 20:52:36,576 - __init__ - WARNING - Driver "1" was added by root
+2022-12-05 20:52:39,500 - __init__ - WARNING - Driver "2" was added by root
+2022-12-05 20:54:27,292 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 20:57:38,341 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 20:58:37,003 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 20:59:10,651 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:02:33,789 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:02:53,591 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:04:12,231 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:06:48,248 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:06:54,680 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:07:31,984 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:07:49,795 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:10:13,242 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:11:49,831 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:13:02,483 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 21:14:54,401 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:08:21,958 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:10:21,829 - __init__ - WARNING - Driver "‚‚‚‚" was added by root
+2022-12-05 22:11:11,969 - __init__ - WARNING - Driver "c:\Windows\system.ini" was added by root
+2022-12-05 22:11:12,005 - __init__ - WARNING - Driver "/etc/passwd" was added by root
+2022-12-05 22:11:12,066 - __init__ - WARNING - Driver "c:/" was added by root
+2022-12-05 22:11:12,083 - __init__ - WARNING - Driver "/" was added by root
+2022-12-05 22:11:12,163 - __init__ - WARNING - Driver "WEB-INF/web.xml" was added by root
+2022-12-05 22:11:12,183 - __init__ - WARNING - Driver "WEB-INF\web.xml" was added by root
+2022-12-05 22:11:12,210 - __init__ - WARNING - Driver "/WEB-INF/web.xml" was added by root
+2022-12-05 22:11:12,335 - __init__ - WARNING - Driver "thishouldnotexistandhopefullyitwillnot" was added by root
+2022-12-05 22:11:12,356 - __init__ - WARNING - Driver "‚‚‚‚" was added by root
+2022-12-05 22:11:30,193 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:11:55,224 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:12:00,106 - __init__ - WARNING - Driver "ZAP" was added by root
+2022-12-05 22:12:18,194 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:13:23,226 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:13:23,432 - __init__ - WARNING - Driver "http://6239503056502895979.owasp.org" was added by root
+2022-12-05 22:13:23,439 - __init__ - WARNING - Driver "https://6239503056502895979.owasp.org" was added by root
+2022-12-05 22:13:23,684 - __init__ - WARNING - Driver "https:\\6239503056502895979.owasp.org" was added by root
+2022-12-05 22:13:23,711 - __init__ - WARNING - Driver "//6239503056502895979.owasp.org" was added by root
+2022-12-05 22:13:34,208 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:14:54,563 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:15:23,020 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:26:36,876 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:28:36,921 - werkzeug - WARNING -  * Debugger is active!
+2022-12-05 22:34:38,906 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:12:08,922 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:12:43,000 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:12:49,439 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:13:36,786 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:14:27,359 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:14:59,421 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:16:16,581 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:18:12,526 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:19:00,025 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:20:11,093 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:20:17,581 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:20:51,705 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:21:11,499 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:25:09,534 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:25:36,735 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:36:40,711 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:41:50,605 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:42:58,621 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:43:16,357 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:48:34,276 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:53:34,765 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:55:44,042 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 15:57:47,261 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:01:14,379 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:01:49,493 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:02:58,505 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:03:33,240 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:03:52,984 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:03:59,414 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:04:07,880 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:08:54,942 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:09:25,947 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:10:10,285 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:10:53,567 - werkzeug - WARNING -  * Debugger is active!
+2022-12-06 16:12:51,730 - __init__ - WARNING - Driver "test" was added by root

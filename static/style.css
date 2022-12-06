@@ -209,3 +209,16 @@ details {
     border: 1px solid black;
     border-collapse: collapse;
 }
+
+.fa_main {
+    background: white;
+    width: 600px;
+    margin: 5pt auto;
+    border: 1px solid black;
+    padding: 20px;
+}
+
+.fa_main a {
+    margin: 10px;
+    width: fit-content;
+}

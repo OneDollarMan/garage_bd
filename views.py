@@ -1,5 +1,5 @@
 import hashlib
-
+import pyotp
 from flask import url_for, render_template, request, redirect, send_from_directory, flash, session
 from __init__ import app
 import forms
@@ -29,15 +29,58 @@ def login():
     if form.validate_on_submit():
         user = gr.login_user(form.login.data, hashlib.md5(form.password.data.encode('utf-8')).hexdigest())
         if user:
-            flash('Вы авторизовались!')
-            session['loggedin'] = True
-            session['id'] = user[0]
-            session['username'] = user[1]
-            session['role'] = user[4]
-            return redirect(url_for('index'))
+            user = user[0]
+            if user[6]:
+                if pyotp.TOTP(user[7]).verify(form.otp.data):
+                    flash('Вы авторизовались!')
+                    session['loggedin'] = True
+                    session['id'] = user[0]
+                    session['username'] = user[1]
+                    session['role'] = user[4]
+                else:
+                    flash('Неправильный OTP')
+            else:
+                flash('Вы авторизовались!')
+                session['loggedin'] = True
+                session['id'] = user[0]
+                session['username'] = user[1]
+                session['role'] = user[4]
+            return redirect(url_for('login'))
         else:
             flash('Пользователя с данной связкой логин-пароль не существует!')
     return render_template('login.html', title='Авторизация', form=form)
+
+
+@app.route("/2fa", methods=['GET', 'POST'])
+def fa():
+    if session.get('loggedin'):
+        form = forms.FaForm()
+        user = gr.get_user(session.get('username'))[0]
+
+        if form.validate_on_submit():
+            if pyotp.TOTP(user[7]).verify(form.otp.data):
+                if gr.toggle_2fa(user[0]):
+                    flash('Двойная аутентификация включена')
+                else:
+                    flash('Двойная аутентификация выключена')
+            else:
+                flash('Неправильный OTP')
+            return redirect(url_for('fa'))
+        return render_template("2fa.html", title='Двухфакторная аутентификация', enable=user[6], secret=user[7], form=form, url=pyotp.totp.TOTP(user[7]).provisioning_uri(name=session.get('username'), issuer_name='Гараж'))
+    else:
+        flash('Требуется аутентификация')
+        return redirect(url_for('index'))
+
+
+@app.route('/2fa/generate')
+def generate():
+    if session.get('loggedin'):
+        if gr.add_secret_key_to_user(session.get('username'), pyotp.random_base32()):
+            flash('Ключ сгенерирован')
+        else:
+            flash('Ключ уже имеется')
+        return redirect(url_for('fa'))
+    return redirect(url_for('index'))
 
 
 @app.route('/logout')
@@ -242,6 +285,7 @@ def transportations_remove(transportationid):
 @app.route('/sitemap.xml')
 @app.route('/favicon.ico')
 @app.route('/style.css')
+@app.route('/qrcode.js')
 def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
 

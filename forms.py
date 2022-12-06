@@ -21,7 +21,12 @@ def date_check(form, field):
 class LoginForm(FlaskForm):
     login = StringField('login')
     password = PasswordField('password')
-    remember_me = BooleanField('remember_me', default=False)
+    otp = StringField('otp')
+
+
+class FaForm(FlaskForm):
+    otp = StringField('otp', [rus_input_required])
+    submit = SubmitField('Включить')
 
 
 class CarForm(FlaskForm):

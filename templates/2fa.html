@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Двухфакторная аутентификация</h1>
+
+<div class="fa_main">
+    <div style="margin: 10px;">
+        Двухфакторная аутентификация: <b>{% if enable %}Включена{% else %}Выключена{% endif %}</b><br>
+        Ваш секретный ключ: <b>{{ secret }}</b> <br>
+        Инструкция:
+        <ul>
+            <li>Скачать Google Authenticator на свой телефон</li>
+            <li>Создать новый аккаунт с помощью <b>ключа настройки.</b></li>
+            <li>Ввести вручную необходимые данные (имя аккаунта любое, ключ).</li>
+            <li>Выбрать аутентификацию по времени</li>
+            <li>Нажать на "Добавить"</li>
+        </ul>
+        Или отсканируйте QR код в приложении Google Authenticator
+        <div id="qrcode"></div>
+        <script src="qrcode.js"></script>
+        <script type="text/javascript">
+            new QRCode(document.getElementById("qrcode"), "{{url}}");
+        </script>
+    </div>
+    <a href="/2fa/generate">
+        <button>Получить ключ (если нет)</button>
+    </a>
+    <div class="login">
+        <form action="" method="post">
+            {% if enable %}Выключение{% else %}Включение{% endif %} двухфакторной авторизации
+            {{ form.csrf_token }}
+            {{ form.otp(placeholder='Введите OTP из приложения Google') }}
+            {% if enable %}{{ form.submit(value='Выключить') }}{% else %}{{ form.submit(value='Включить') }}{% endif %}
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
