@@ -224,7 +224,7 @@ def transportations():
     form.driver.choices = gr.select_drivers()
     form.gas.choices = gr.select_gases()
     form.station.choices = gr.select_stations()
-
+    print(gr.get_trs())
     filter_form = forms.FilterForm()
     filter_form.driver2.choices = [("", "---")] + gr.select_drivers()
     filter_form.status.choices = [("", "---")] + gr.select_statuses()
